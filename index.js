@@ -19,7 +19,15 @@ async function run() {
         await client.connect();
         console.log("connected to MongoDB");
 
+        const db = client.db('job-task');
+        const recipesCollection = db.collection('recipe');
 
+        // Save recipes in database
+        app.post("/add-recipes", async (req, res) => {
+            const recipe = req.body
+            const result = await recipesCollection.insertOne(recipe)
+            res.send(result)
+        })
 
     } finally {
     }
