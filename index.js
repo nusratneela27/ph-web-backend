@@ -22,6 +22,14 @@ async function run() {
         const usersCollection = client.db('job-task').collection('users')
         const recipesCollection = client.db('job-task').collection('recipe');
 
+        // Get user by email
+        app.get('/users/:email', async (req, res) => {
+            const email = req.params.email
+            const query = { email: email }
+            const result = await usersCollection.findOne(query)
+            res.send(result)
+        })
+
         // Save user in database
         app.put('/users/:email', async (req, res) => {
             const email = req.params.email
