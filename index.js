@@ -65,6 +65,20 @@ async function run() {
             res.send(result)
         })
 
+        // update a recipe data
+        app.put("/recipes/:id", async (req, res) => {
+            const id = req.params.id;
+            const body = req.body;
+            const filter = { _id: new ObjectId(id) }
+            const updateDoc = {
+                $set: {
+                    purchased_by: body.purchased_by,
+                    watchCount: body.watchCount
+                }
+            }
+            const result = await recipesCollection.updateOne(filter, updateDoc)
+            res.send(result)
+        })
     } finally {
     }
 }
