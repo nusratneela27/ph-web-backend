@@ -79,6 +79,15 @@ async function run() {
             const result = await recipesCollection.updateOne(filter, updateDoc)
             res.send(result)
         })
+
+        // search by recipe name
+        app.get('/recipeNameSearch/:text', async (req, res) => {
+            const searchText = req.params.text;
+            const query = { name: { $regex: searchText, $options: "i" } };
+            const result = await recipesCollection.find(query).toArray();
+            res.send(result);
+        })
+
     } finally {
     }
 }
